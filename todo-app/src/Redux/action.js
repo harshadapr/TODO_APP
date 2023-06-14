@@ -50,11 +50,102 @@
 
 // export { AddTodo, getTodos, getData, patchData, deleteTodo }
 
+// import axios from "axios";
+// import {
+//     GET_TODO,
+//     ADD_SUBTASK,
+// } from "./actiontype";
+
+// let AddTodo = (data) => {
+//     return (dispatch) => {
+//         axios
+//             .post(`https://viridian-gopher-vest.cyclic.app/Todo`, {
+//                 title: data,
+//                 status: false,
+//                 subtasks: [],
+//             })
+//             .then((res) => {
+//                 return dispatch(getData());
+//             });
+//     };
+// };
+
+// let getData = () => {
+//     return (dispatch) => {
+//         axios.get(`https://viridian-gopher-vest.cyclic.app/Todo`).then((res) => {
+//             return dispatch(getTodos(res.data));
+//         });
+//     };
+// };
+
+// let patchData = (id, data) => {
+//     return (dispatch) => {
+//         axios
+//             .patch(`https://viridian-gopher-vest.cyclic.app/Todo/${id}`, { status: data ? false : true })
+//             .then((res) => {
+//                 return dispatch(getData());
+//             });
+//     };
+// };
+
+// let deleteTodo = (id) => {
+//     return (dispatch) => {
+//         axios.delete(`https://viridian-gopher-vest.cyclic.app/Todo/${id}`).then((res) => {
+//             return dispatch(getData());
+//         });
+//     };
+// };
+
+
+
+// let addSubtask = (taskId, subtask) => {
+//     return (dispatch) => {
+//         axios.post(`https://viridian-gopher-vest.cyclic.app/Todo/${taskId}/subtasks`, {
+//             title: subtask,
+//             status: false,
+//         })
+//             .then((res) => {
+//                 const addedSubtask = res.data;
+//                 dispatch({
+//                     type: ADD_SUBTASK,
+//                     payload: {
+//                         taskId,
+//                         subtask: addedSubtask,
+//                     },
+//                 });
+//             })
+//             .catch((error) => {
+//                 console.error("Error adding subtask:", error);
+//                 // Handle the error here, e.g., show an error message to the user
+//             });
+//     };
+// };
+
+// let getTodos = (data) => {
+//     return {
+//         type: GET_TODO,
+//         payload: data,
+//     };
+// };
+
+// export { AddTodo, getTodos, getData, patchData, deleteTodo, addSubtask };
+
 import axios from "axios";
-import {
-    GET_TODO,
-    ADD_SUBTASK,
-} from "./actiontype";
+import { GET_TODO, ADD_SUBTASK } from "./actiontype";
+
+let getData = () => {
+    return (dispatch) => {
+        axios
+            .get(`https://viridian-gopher-vest.cyclic.app/Todo`)
+            .then((res) => {
+                dispatch(getTodos(res.data));
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+                // Handle the error here, e.g., show an error message to the user
+            });
+    };
+};
 
 let AddTodo = (data) => {
     return (dispatch) => {
@@ -65,45 +156,61 @@ let AddTodo = (data) => {
                 subtasks: [],
             })
             .then((res) => {
-                return dispatch(getData());
+                dispatch(getData());
+            })
+            .catch((error) => {
+                dispatch(getData());
+                console.error("Error adding todo:", error);
+                // Handle the error here, e.g., show an error message to the user
             });
-    };
-};
-
-let getData = () => {
-    return (dispatch) => {
-        axios.get(`https://viridian-gopher-vest.cyclic.app/Todo`).then((res) => {
-            return dispatch(getTodos(res.data));
-        });
     };
 };
 
 let patchData = (id, data) => {
     return (dispatch) => {
-        axios
-            .patch(`https://viridian-gopher-vest.cyclic.app/Todo/${id}`, { status: data ? false : true })
-            .then((res) => {
-                return dispatch(getData());
-            });
+        try {
+            axios
+                .patch(`https://viridian-gopher-vest.cyclic.app/Todo/${id}`, {
+                    status: data ? false : true,
+                })
+                .then((res) => {
+                    getData();
+                })
+                .catch((error) => {
+                    dispatch(getData());
+                    console.log("first");
+                    console.error("Error updating todo:", error);
+                    // Handle the error here, e.g., show an error message to the user
+                });
+        } catch (error) {
+            console.error("Error updating todo:", error);
+            // Handle the error here, e.g., show an error message to the user
+        }
     };
 };
 
 let deleteTodo = (id) => {
     return (dispatch) => {
-        axios.delete(`https://viridian-gopher-vest.cyclic.app/Todo/${id}`).then((res) => {
-            return dispatch(getData());
-        });
+        axios
+            .delete(`https://viridian-gopher-vest.cyclic.app/Todo/${id}`)
+            .then((res) => {
+                dispatch(getData());
+            })
+            .catch((error) => {
+                dispatch(getData());
+                console.error("Error deleting todo:", error);
+                // Handle the error here, e.g., show an error message to the user
+            });
     };
 };
 
-
-
 let addSubtask = (taskId, subtask) => {
     return (dispatch) => {
-        axios.post(`https://viridian-gopher-vest.cyclic.app/Todo/${taskId}/subtasks`, {
-            title: subtask,
-            status: false,
-        })
+        axios
+            .post(`https://viridian-gopher-vest.cyclic.app/Todo/${taskId}/subtasks`, {
+                title: subtask,
+                status: false,
+            })
             .then((res) => {
                 const addedSubtask = res.data;
                 dispatch({

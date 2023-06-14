@@ -82,7 +82,6 @@ import { Box, Button, Heading } from "@chakra-ui/react";
 
 function TodoDisplay() {
 
-    const [localData, setLocalData] = useState();
 
 
     const todos = useSelector((state) => state.todos);
