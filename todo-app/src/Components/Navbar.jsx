@@ -131,7 +131,7 @@ function Navbar() {
     return (
         <Flex alignItems="center" bg="gray.200" p={4}>
             <Box>
-                <Link to="/">
+                <Link to="/home">
                     <Button colorScheme="blue" mr={4}>
                         Todo App
                     </Button>
