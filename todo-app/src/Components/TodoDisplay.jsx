@@ -75,18 +75,28 @@
 // export default TodoDisplay;
 
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTodo, getData, patchData, addSubtask } from "../Redux/action";
 import { Box, Button, Heading } from "@chakra-ui/react";
 
 function TodoDisplay() {
+
+    const [localData, setLocalData] = useState();
+
+
     const todos = useSelector((state) => state.todos);
     const dispatch = useDispatch();
 
+    // const handleUpdateData = () => {
+    //     // Update localData state with reduxData
+    //     setLocalData(todos);
+    // };
+
+
     useEffect(() => {
         dispatch(getData());
-    }, []);
+    }, [dispatch]);
 
     const handleAddSubtask = (taskId, subtask) => {
         dispatch(addSubtask(taskId, subtask));
@@ -103,7 +113,10 @@ function TodoDisplay() {
                     <Button
                         colorScheme={task.status ? "green" : "yellow"}
                         size="sm"
-                        onClick={() => dispatch(patchData(task.id, task.status))}
+                        onClick={() => {
+                            dispatch(patchData(task.id, task.status))
+                            // handleUpdateData()
+                        }}
                         mr={2}
                     >
                         {task.status ? "Completed" : "Pending"}
@@ -111,7 +124,10 @@ function TodoDisplay() {
                     <Button
                         colorScheme="red"
                         size="sm"
-                        onClick={() => dispatch(deleteTodo(task.id))}
+                        onClick={() => {
+                            dispatch(deleteTodo(task.id))
+                            // handleUpdateData()
+                        }}
                     >
                         Delete Task
                     </Button>

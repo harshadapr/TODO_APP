@@ -59,7 +59,7 @@ import {
 let AddTodo = (data) => {
     return (dispatch) => {
         axios
-            .post(`http://localhost:8080/Todo`, {
+            .post(`https://viridian-gopher-vest.cyclic.app/Todo`, {
                 title: data,
                 status: false,
                 subtasks: [],
@@ -72,7 +72,7 @@ let AddTodo = (data) => {
 
 let getData = () => {
     return (dispatch) => {
-        axios.get(`http://localhost:8080/Todo`).then((res) => {
+        axios.get(`https://viridian-gopher-vest.cyclic.app/Todo`).then((res) => {
             return dispatch(getTodos(res.data));
         });
     };
@@ -81,7 +81,7 @@ let getData = () => {
 let patchData = (id, data) => {
     return (dispatch) => {
         axios
-            .patch(`http://localhost:8080/Todo/${id}`, { status: data ? false : true })
+            .patch(`https://viridian-gopher-vest.cyclic.app/Todo/${id}`, { status: data ? false : true })
             .then((res) => {
                 return dispatch(getData());
             });
@@ -90,35 +90,17 @@ let patchData = (id, data) => {
 
 let deleteTodo = (id) => {
     return (dispatch) => {
-        axios.delete(`http://localhost:8080/Todo/${id}`).then((res) => {
+        axios.delete(`https://viridian-gopher-vest.cyclic.app/Todo/${id}`).then((res) => {
             return dispatch(getData());
         });
     };
 };
 
-// let addSubtask = (taskId, subtask) => {
-//     return (dispatch) => {
-//         axios
-//             .post(`http://localhost:8080/Todo/${taskId}/subtasks`, {
-//                 title: subtask,
-//                 status: false,
-//             })
-//             .then((res) => {
-//                 const addedSubtask = res.data;
-//                 dispatch({
-//                     type: ADD_SUBTASK,
-//                     payload: {
-//                         taskId,
-//                         subtask: addedSubtask,
-//                     },
-//                 });
-//             });
-//     };
-// };
+
 
 let addSubtask = (taskId, subtask) => {
     return (dispatch) => {
-        axios.post(`http://localhost:8080/Todo/${taskId}/subtasks`, {
+        axios.post(`https://viridian-gopher-vest.cyclic.app/Todo/${taskId}/subtasks`, {
             title: subtask,
             status: false,
         })
