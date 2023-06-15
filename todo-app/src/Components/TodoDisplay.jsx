@@ -29,50 +29,7 @@
 //     );
 // }
 
-// export default TodoDisplay;
-// import React, { useEffect } from "react";
-// import { useSelector, useDispatch } from "react-redux";
-// import { deleteTodo, getData, patchData } from "../Redux/action";
-// import { Box, Button, Heading } from "@chakra-ui/react";
 
-// function TodoDisplay() {
-//     const todos = useSelector((state) => state.todos);
-//     const dispatch = useDispatch();
-
-//     useEffect(() => {
-//         dispatch(getData());
-//     }, []);
-
-//     return (
-//         <Box>
-//             <Heading as="h1" mb={4}>Display</Heading>
-//             {todos.map((e) => (
-//                 <Box key={e.id} borderWidth="1px" borderRadius="md" p={4} mb={4}>
-//                     <Heading as="h2" size="md" mb={2}>
-//                         {e.title}
-//                     </Heading>
-//                     <Button
-//                         colorScheme={e.status ? "green" : "yellow"}
-//                         size="sm"
-//                         onClick={() => dispatch(patchData(e.id, e.status))}
-//                         mr={2}
-//                     >
-//                         {e.status ? "Completed" : "Pending"}
-//                     </Button>
-//                     <Button
-//                         colorScheme="red"
-//                         size="sm"
-//                         onClick={() => dispatch(deleteTodo(e.id))}
-//                     >
-//                         Delete Task
-//                     </Button>
-//                 </Box>
-//             ))}
-//         </Box>
-//     );
-// }
-
-// export default TodoDisplay;
 
 
 import React, { useEffect, useState } from "react";
